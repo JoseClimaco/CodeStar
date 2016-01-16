@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" ng-app="githubBattleApp">
+<head>
+    <meta charset="utf-8">
+    <title>Github Battle</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+</head>
+<body>
+
+<div class="view-container">
+    <div ng-view class="view-frame">
+        <div ng-controller="UsersCtrl">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2">
+                        <!--Sidebar content-->
+
+
+                        <form ng-submit="addUser()">
+                            Add user:
+                            <input ng-model="newUser" ><!-- ng-Change="setUser(username)" -->
+                            <input class="btn-primary" type="submit" value="add">
+                        </form>
+
+
+                        <ul class="userList" >
+                            <li ng-repeat="user in users track by $index">
+                                {{user.username}}
+                            </li>
+                        </ul>
+                        <hr/>
+                        <div class="alert alert-info" role="alert">You can add an infinite number of users and compare them all. Only one can win.</div>
+                        <div class="alert alert-info" role="alert">The score is based on Stars count, Forks count, Open issues and existence of information pages.</div>
+                        <div class="alert alert-info" role="alert"><strong>Here you have the top GitHub users to get you started.</strong>
+                            <ul>
+
+                                <li>taylorotwell</li>
+                                <li>GrahamCampbell</li>
+                                <li>brianchandotcom</li>
+                                <li>michalbe</li>
+                                <li>fabpot</li>
+                                <li>kevinsawicki</li>
+                                <li>springmeyer</li>
+                                <li>rkh</li>
+                                <li>ornicar</li>
+                                <li>sebmck</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10" ng-click="startComparison()" ng-controller="RepoListCtrl">
+                        <!--Body content-->
+                        <input class="btn-primary" type="submit" value="Start Comparison">
+
+                        <ul class="users" ng-show="status == true">
+                            <li ng-repeat="user in users | orderBy:'-totalStars'">
+                                <div class="panel panel-default panel-{{ $index +1 }}">
+                                    <div class="panel-body">
+                                        <span>Place: {{ $index +1 }}</span> <br />
+                                        <span>User: {{ user.username }}</span> <br />
+                                        <span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{ user.averageStars | number:2 }} average stars</span> <br />
+                                        <span><span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{ user.totalStars | number:2 }} total stars</span> <br />
+                                        <span><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{ user.averageScore | number:2 }} average score</span> <br />
+                                        <span><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{ user.totalScore | number:2 }} total score</span> <br />
+
+                                        <ol class="repos">
+                                            <strong>Repos ordered by score</strong>
+                                            <li ng-repeat="repo in user.repos | orderBy:'-score'">
+                                                {{repo.name}} <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{ repo.stargazers_count }} <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{ repo.score }}
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

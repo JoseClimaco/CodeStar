@@ -1,0 +1,12 @@
+{
+  "name": "CodeStar",
+  "description": "Multiple users, 1 chance, 1 winner",
+  "version": "0.0.1",
+  "homepage": "codestar.dev",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.3.0",
+    "bootstrap": "~3.1.1"
+  }
+}
